@@ -208,3 +208,19 @@ xlabel('Normal force (N)')
 ylabel('Divergence')
 xlim([0 P])
 ylim([-2e-3 0.05])
+
+%% --------------------------Stress computation--------------------------
+stressT = F(Ndx+3:2*(Ndx+1),:)./(d.*e_ext);
+
+figure; hold on
+fidx = [1,2,3];
+force = abs(sum(F(2:Ndx+1,1:size(pos,2)),1));
+[~,idx1] = find(force>fidx(1),1,'first');
+[~,idx2] = find(force>fidx(2),1,'first');
+[~,idx3] = find(force>fidx(3),1,'first');
+plot(pos(Ndx+3:end,idx(1)).*1e3,stressT(:,idx(1)).*1e-3,'-k');
+plot(pos(Ndx+3:end,idx(2)).*1e3,stressT(:,idx(2)).*1e-3,'-k');
+plot(pos(Ndx+3:end,idx(3)).*1e3,stressT(:,idx(3)).*1e-3,'-k');
+p1=plot(pos(Ndx+3:end,idx(4)).*1e3,stressT(:,idx(4)).*1e-3,'-k');
+xlabel('position (mm)')
+ylabel('Stress (kPa)')
