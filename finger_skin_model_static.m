@@ -95,7 +95,7 @@ while(t<=2 || abs(sum(F(1:Ndx+1,t-1),1))>1e-3)      %% Stop condition: global ne
             Fr = kc*(abs(pos(i,t-1)));
             F(i,t) = F(i,t) + Fr;
             % Tangential force by Dahl model of friction
-            F(i+Ndx+1,t) = F(i+Ndx+1,t) + F(i+Ndx+1,t-1) - dt*...
+            F(i+Ndx+1,t) = F(i+Ndx+1,t) + F(i+Ndx+1,t-1) + dt*...
                     sigma0*Upt(i,t-1)*(abs(1-F(i+Ndx+1,t-1)/(fclb*Fr)*sign(Upt(i,t-1)))).^n*...
                     sign(1-F(i+Ndx+1,t-1)/(fclb*Fr)*sign(Upt(i,t-1)));
             if(i == floor(Ndx/2)+2)
@@ -142,7 +142,7 @@ for k=1:tf
         caxis([0 1])
         
         quiver(pos(Ndx+1+vec_plot,k),pos(vec_plot,k),...
-            F(Ndx+1+vec_plot,k),F(vec_plot,k),0.5,'Color','b')
+            -F(Ndx+1+vec_plot,k),F(vec_plot,k),0.5,'Color','b')
         
         xlim([-4e-3 4e-3])
         xlabel('x (m)')
@@ -180,13 +180,13 @@ scatter(pos(Ndx+1+vec_plot,tf),pos(vec_plot,tf),sz,cd,'filled');
 
 caxis([0 1])
 quiver(pos(Ndx+1+vec_plot,tf),pos(vec_plot,tf),...
-    F(Ndx+1+vec_plot,tf),F(vec_plot,tf),0.5,'Color','b')
+    -F(Ndx+1+vec_plot,tf),F(vec_plot,tf),0.5,'Color','b')
 
 subplot(3,1,2)
 hold on
 muP = area(pos(Ndx+1+vec_plot,tf),-fclb.*F(vec_plot,tf),-1e-4,'Facecolor',[0 0.5 0.5]);
 alpha(muP,0.3);
-plot(pos(Ndx+1+vec_plot(1:end),tf),F(Ndx+1+vec_plot,tf));
+plot(pos(Ndx+1+vec_plot(1:end),tf),-F(Ndx+1+vec_plot,tf));
 xlabel('Position (N)')
 ylabel('Tangential traction')
 
