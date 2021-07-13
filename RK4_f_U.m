@@ -1,4 +1,4 @@
-function dU = f_U(tc,Uc,Fc)
+function dU = RK4_f_U(tc,Uc,Fc)
 global km kt kn Kn B posi Ndx nu
 
 pos_x = Uc(Ndx+2:2*(Ndx+1))+posi(Ndx+2:2*(Ndx+1));
